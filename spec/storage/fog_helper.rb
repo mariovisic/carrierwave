@@ -183,6 +183,15 @@ end
           end
         end
 
+        describe '#connection' do
+          before { @uploader.stub(:fog_host).and_return('http://foo.bar') }
+
+          it 'does not set the host based on the fog_host' do
+            storage = CarrierWave::Storage::Fog.new(@uploader)
+            storage.connection.instance_variable_get('@host').should_not == 'foo.bar'
+          end
+        end
+
         describe 'fog_public' do
 
           context "true" do
